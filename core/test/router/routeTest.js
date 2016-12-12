@@ -29,7 +29,7 @@ describe('Route class', () => {
       describe('properties', () => {
         const route = new Route(params, Resource);
         it('should have valid property _verb', () => {
-          assert.equal(route.verb, params.verb);
+          assert.equal(route.verb, params.verb.toLowerCase());
         });
         it('should have valid property _url', () => {
           assert.equal(route.url, params.url);
@@ -49,7 +49,7 @@ describe('Route class', () => {
 
   describe('invalid Route', () => {
     const params = {
-      verb: 1,
+      verb: 'get',
       url: '/test-route',
       method: 'testMethod'
     };
@@ -61,9 +61,52 @@ describe('Route class', () => {
       testMethod() {
       }
     }
-    it('should throw error', () => {
-      assert.throws(() => new Route(params, Resource), TypeError);
+    let route = new Route(params, Resource);
+    describe('invalid http verb', () => {
+      describe('invalid type', () => {
+        const invalidTypes = [1, 1.2, true, false, Resource, () => {
+        }, {}, []];
+        for (let type in invalidTypes) {
+          it(`should throw a TypeError on ${typeof invalidTypes[type]}`, () => {
+            assert.throws(() => route.verb = invalidTypes[type], TypeError);
+          })
+        }
+      });
+      describe('invalid type', () => {
+        const invalidSyntax = ['a', 'b', 'toto', 'tata'];
+        for (let type in invalidSyntax) {
+          it(`should throw a TypeError on ${invalidSyntax[type]}`, () => {
+            assert.throws(() => route.verb = invalidSyntax[type], SyntaxError);
+          })
+        }
+      });
     });
-    // const route = new Route(params, Resource);
+    describe('invalid url', () => {
+      const invalidTypes = [1, 1.2, true, false, Resource, () => {
+      }, {}, []];
+      for (let type in invalidTypes) {
+        it(`should throw a TypeError on ${typeof invalidTypes[type]}`, () => {
+          assert.throws(() => route.url = invalidTypes[type], TypeError);
+        })
+      }
+    });
+    describe('invalid method', () => {
+      const invalidTypes = [1, 1.2, true, false, Resource, () => {
+      }, {}, []];
+      for (let type in invalidTypes) {
+        it(`should throw a TypeError on ${typeof invalidTypes[type]}`, () => {
+          assert.throws(() => route.method = invalidTypes[type], TypeError);
+        })
+      }
+    });
+    describe('invalid resource', () => {
+      const invalidTypes = [1, 1.2, 'ab', true, false, Route, () => {
+      }, {}, []];
+      for (let type in invalidTypes) {
+        it(`should throw a TypeError on ${typeof invalidTypes[type]}`, () => {
+          assert.throws(() => new Route(params, invalidTypes[type]), TypeError);
+        })
+      }
+    });
   });
 });
