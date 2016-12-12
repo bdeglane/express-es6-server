@@ -31,8 +31,13 @@ export default class Route {
    * @param v {string} ['get','post','put','delete']
    */
   set verb(v) {
+    const validVerbs = ['get', 'post', 'put', 'delete'];
     if (typeof v === 'string') {
-      this._verb = v.toLowerCase();
+      if (validVerbs.indexOf(v.toLowerCase()) >= 0) {
+        this._verb = v.toLowerCase();
+      } else {
+        throw new SyntaxError(`verb must be a valid http verb in ['get','post','put','delete'], ${v} given`);
+      }
     } else {
       throw new TypeError('verb must be a string');
     }
@@ -111,7 +116,9 @@ export default class Route {
   }
 
   /**
-   * Instanciate the main Controller class
+   * Instanciate the main Controller class which
+   * contain the resource controller and the method
+   * to call
    */
   buildController() {
     this._controller = new Controller(this.resource);
