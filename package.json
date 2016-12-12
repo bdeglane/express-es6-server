@@ -4,7 +4,6 @@
   "description": "express server ",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "test:core": "./node_modules/.bin/mocha --compilers js:babel-core/register ./core/test/index.js"
   },
   "author": {
