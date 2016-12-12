@@ -38,9 +38,6 @@ export default class Controller {
    * @param method {function}
    */
   method({req, res, next, method}) {
-
-    console.log(method);
-
     if (this.hasMethod(method)) {
       this.resource[method](req, res);
     } else {
