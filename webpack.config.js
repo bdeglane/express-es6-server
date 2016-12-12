@@ -13,8 +13,8 @@ fs.readdirSync('node_modules')
 
 module.exports = {
   entry: {
-    app: ['babel-polyfill', path.join(__dirname, 'core', 'main.js')],
-    // app: path.join(__dirname, 'core', 'main.js'),
+    // app: ['babel-polyfill', path.join(__dirname, 'core', 'main.js')],
+    app: path.join(__dirname, 'core', 'main.js'),
   },
   output: {
     path: path.join(__dirname, 'dist'),
