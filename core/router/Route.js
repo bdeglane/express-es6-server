@@ -26,8 +26,9 @@ export default class Route {
   }
 
   /**
+   * An http verb get, post, put, delete
    *
-   * @param v {string}
+   * @param v {string} ['get','post','put','delete']
    */
   set verb(v) {
     if (typeof v === 'string') {
@@ -46,6 +47,7 @@ export default class Route {
   }
 
   /**
+   * A route for express router '/route/id/:id'
    *
    * @param u {string}
    */
@@ -66,6 +68,8 @@ export default class Route {
   }
 
   /**
+   * The method to call in the controller class
+   * in this._ressource.
    *
    * @param m {string}
    */
@@ -86,6 +90,7 @@ export default class Route {
   }
 
   /**
+   * A class extending BaseControlleur
    *
    * @param r {function}
    */
@@ -106,7 +111,7 @@ export default class Route {
   }
 
   /**
-   *
+   * Instanciate the main Controller class
    */
   buildController() {
     this._controller = new Controller(this.resource);
@@ -121,7 +126,8 @@ export default class Route {
   }
 
   /**
-   *
+   * Add a route to the express.router class
+   * ex: router.get('/test/id',(req,res,next)=>{});
    */
   createRoute() {
     router[this.verb](this.url, (req, res, next) => {
