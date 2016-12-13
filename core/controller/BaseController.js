@@ -4,7 +4,7 @@ import ServiceContainer from '../service/ServiceContainer';
 
 export default class BaseController {
   constructor(resource) {
-    this._resource = resource;
+    this.resource = resource;
     this.service = ServiceContainer.getInstance();
   }
 
