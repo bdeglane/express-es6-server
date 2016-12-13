@@ -18,7 +18,7 @@ export default class Dao {
    * @param enforcer {Symbol}
    */
   constructor(enforcer) {
-    if (enforcer != singletonEnforcer) throw "class already exist! exit";
+    if (enforcer != singletonEnforcer) throw new Error('class already exist! exit');
   }
 
   /**
