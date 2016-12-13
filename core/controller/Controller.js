@@ -41,7 +41,11 @@ export default class Controller {
    * @param name {string}
    */
   set resourceName(name) {
-    this._resourceName = name;
+    if (typeof name === 'string') {
+      this._resourceName = name;
+    } else {
+      throw new TypeError('resource name must be a string');
+    }
   }
 
   /**
@@ -52,7 +56,7 @@ export default class Controller {
   }
 
   initControllerClass() {
-    // instanciate the class controller
+    // instantiate the class controller
     let resource = new this.resource();
     // if key of current resource doesn't exist
     if (!controllers.has(resource.resource)) {
@@ -81,7 +85,7 @@ export default class Controller {
    * @param method {function}
    */
   call({req, res, next, method}) {
-    this.method({req, res, next, method});
+    return this.method({req, res, next, method});
   }
 
   /**
@@ -103,7 +107,7 @@ export default class Controller {
    */
   method({req, res, next, method}) {
     if (this.hasMethod(method)) {
-      this.getController()[method](req, res);
+      return this.getController()[method](req, res);
     } else {
       // todo write error class as a service
       res.send('sad');
