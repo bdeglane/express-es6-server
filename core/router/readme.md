@@ -1,8 +1,8 @@
-## Router and Route class
+# Router and Route class
 
-### Principles
+## Principles
 ![Router Router class diagram uml](../../doc/core/router/Router-Router.png)
-#### Router class
+### Router class
 
 The Router class init an express router.
 
@@ -21,4 +21,17 @@ const params = {
 
 ```javascript
 let router = new Router(params);
+```
+
+## Route class
+```javascript
+const params = {
+    verb: 'get',
+    url: '/test/:id([0-9]+)',
+    method: 'controllerMethod'
+};
+```
+
+```javascript
+let route = new Route(params,resource);
 ```
