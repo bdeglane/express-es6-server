@@ -6,7 +6,7 @@ import BaseController from '../controller/BaseController';
 export default class Router {
   /**
    *
-   * @param controller {string}
+   * @param controller {function}
    * @param routing {array}
    */
   constructor({controller, routing}) {
