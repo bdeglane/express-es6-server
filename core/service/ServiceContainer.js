@@ -36,7 +36,7 @@ export default class ServiceContainer {
    */
   add(service, object) {
     if (typeof service === 'string') {
-      if (object instanceof BaseService) {
+      if (object instanceof Object) {
         if (!this.services.has(service)) {
           this.services.set(service, object);
         } else {
