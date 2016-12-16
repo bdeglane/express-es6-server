@@ -3,8 +3,6 @@
 const singleton = Symbol();
 const singletonEnforcer = Symbol();
 
-import BaseService from './BaseService';
-
 export default class ServiceContainer {
   /**
    *
