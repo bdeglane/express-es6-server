@@ -3,6 +3,8 @@
 const singleton = Symbol();
 const singletonEnforcer = Symbol();
 
+import BaseService from './BaseService';
+
 export default class ServiceContainer {
   /**
    *
@@ -34,16 +36,17 @@ export default class ServiceContainer {
    */
   add(service, object) {
     if (typeof service === 'string') {
-      if (typeof object === 'object') {
+      if (object instanceof BaseService) {
         if (!this.services.has(service)) {
           this.services.set(service, object);
         } else {
           throw new Error(`key '${service}' already exist`);
         }
       } else {
-        throw new TypeError('service must be an object');
+        throw new TypeError('object must be an instance of BaseService');
       }
-    } else {
+    }
+    else {
       throw new TypeError('service name must be a string');
     }
   }
@@ -55,8 +58,10 @@ export default class ServiceContainer {
   remove(service) {
     if (this.services.has(service)) {
       this.services.delete(service);
+      return true;
+    } else {
+      return false;
     }
-    return false;
   }
 
   /**
