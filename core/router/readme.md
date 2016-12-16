@@ -1,7 +1,7 @@
 # Router and Route class
 
 ## Principles
-![Router Router class diagram uml](../../doc/core/router/Router-Router.png)
+![Router Router class diagram uml](../../doc/core/router/Route-Router.png)
 ### Router class
 
 The Router class init an express router.
