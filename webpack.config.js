@@ -13,8 +13,8 @@ fs.readdirSync('node_modules')
 
 module.exports = {
   entry: {
-    // app: ['babel-polyfill', path.join(__dirname, 'core', 'main.js')],
-    app: path.join(__dirname, 'core', 'main.js'),
+    app: ['babel-polyfill', path.join(__dirname, 'core', 'main.js')],
+    // app: path.join(__dirname, 'core', 'main.js'),
   },
   output: {
     path: path.join(__dirname, 'dist'),
@@ -40,7 +40,7 @@ module.exports = {
         loader: 'babel',
         plugins: ['transform-runtime'],
         query: {
-          presets: ['es2015']
+          presets: ['es2015', 'stage-3']
         }
       }, {
         test: /\.ts(x?)$/,
