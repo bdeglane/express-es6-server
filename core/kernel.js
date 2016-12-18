@@ -5,6 +5,12 @@
  */
 import {user} from '../app/user/user';
 import {experiment} from '../app/experiment/experiment';
+
+export const resources = [
+  user,
+  experiment
+];
+
 /*
  * Import all available services
  *
@@ -13,12 +19,7 @@ import {experiment} from '../app/experiment/experiment';
 import Dao from './dao/Dao';
 import View from './view/View';
 
-export const resources = [
-  user,
-  experiment
-];
-
 export const services = {
-  dao: Dao,
-  view: View
+  dao: Dao.getInstance(),
+  view: new View()
 };
