@@ -34,8 +34,8 @@ export default class Model {
    */
   findGetter(key, value) {
     let getter = `get${key.charAt(0).toUpperCase()}${key.slice(1)}`;
-    if (typeof this[setter] === 'function') {
-      this[setter](value);
+    if (typeof this[getter] === 'function') {
+      this[getter](value);
     }
   }
 
