@@ -2,9 +2,12 @@
 
 import BaseController from './BaseController';
 
-// store resource controllers to avoid duplicate memory entry
+// store resources controllers to avoid duplicate memory entry
 let controllers = new Map();
 
+/**
+ * todo change to a macro controller
+ */
 export default class Controller {
   /**
    * Resource controller constructor
@@ -107,7 +110,17 @@ export default class Controller {
    */
   method({req, res, next, method}) {
     if (this.hasMethod(method)) {
-      return this.getController()[method](req, res);
+      // promise fall back
+      // 1. call the correct controller method
+      return this.getController()[method](req, res)
+      // 2. send the result
+        .then((result) => {
+          res.send(result);
+        })
+        // 3. send the error
+        .catch((error) => {
+          res.status(400).send(error);
+        });
     } else {
       // todo write error class as a service
       res.send('sad');
