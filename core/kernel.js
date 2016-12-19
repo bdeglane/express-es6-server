@@ -5,10 +5,12 @@
  */
 import {user} from '../app/user/user';
 import {experiment} from '../app/experiment/experiment';
+import {example} from '../app/example/example';
 
 export const resources = [
   user,
-  experiment
+  experiment,
+  example
 ];
 
 /*
