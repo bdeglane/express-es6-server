@@ -2,6 +2,13 @@
 
 import express from 'express';
 import http from 'http';
+import bodyParser from 'body-parser';
+import fs from 'fs';
+import path from 'path';
+import morgan from 'morgan';
+import FileStreamRotator from 'file-stream-rotator';
+import compression from 'compression';
+import cors from 'cors';
 
 import Router from '../router/Router';
 import ServiceContainer from '../service/ServiceContainer';
@@ -22,6 +29,7 @@ export default class Server {
     this.createRouters();
     this.getRouters();
     this.buildServices();
+    this.buildMiddlewares();
   }
 
   /**
@@ -60,6 +68,28 @@ export default class Server {
     for (let service in services) {
       this.serviceContainer.add(service, services[service]);
     }
+  }
+
+  buildLogger() {
+    this.app.enable("trust proxy");
+    let logDirectory = path.resolve(path.join('log', 'access'));
+    fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
+    let accessLogStream = FileStreamRotator.getStream({
+      date_format: 'YYYY-MM-DD',
+      filename: logDirectory + '/api-access-%DATE%.log',
+      frequency: 'weekly',
+      verbose: false
+    });
+    this.app.use(morgan('[:date[clf]] [:req[x-forwarded-for]] [:req[x-forwarded-server]] :remote-user ":method :url"  :status :response-time ms :res[content-length] ":user-agent"', {stream: accessLogStream}));
+  }
+
+  buildMiddlewares() {
+    this.app.use(bodyParser.urlencoded({extended: true}));
+    this.app.use(bodyParser.json());
+    this.app.use(compression());
+    this.app.use(cors());
+
+    this.buildLogger();
   }
 
   /**
