@@ -29,6 +29,7 @@
     "gulp-util": "^3.0.7",
     "gulp-webserver": "^0.9.1",
     "json-loader": "^0.5.4",
+    "jsonwebtoken": "^7.2.1",
     "pg": "^6.1.0",
     "typescript": "^2.0.10",
     "webpack": "^1.14.0"
