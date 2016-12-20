@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
-import {config} from "../../../config/config";
+import jwt from 'jsonwebtoken';
+import {config} from '../../../config/config';
 import View from '../../../core/view/View';
 
 export const authMiddleware = (req, res, next) => {
@@ -36,7 +36,7 @@ export const authMiddleware = (req, res, next) => {
 
 /**
  *
- * @param user {{}}
+ * @param user
  */
 export const getToken = (user) => {
   return jwt.sign(
