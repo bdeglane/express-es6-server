@@ -2,7 +2,7 @@ export default class View {
 	constructor() {
 		this.response = {
 			data: [],
-			status: 999,
+			status: -1,
 			error: {status: false}
 		};
 	}
