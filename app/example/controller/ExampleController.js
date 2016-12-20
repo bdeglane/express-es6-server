@@ -14,7 +14,10 @@ export default class ExampleController extends Controller {
    * @returns {Promise<any|*|Object>}
    */
   async getExample(req, res) {
-    let view = this.service.get('view');
+    // get the view
+    let View = this.service.get('view');
+    let view = new View();
+
     let models;
     try {
       models = await this.dao.getModels();
@@ -34,7 +37,9 @@ export default class ExampleController extends Controller {
    */
   async getExampleById(req, res) {
     // get the view
-    let view = this.service.get('view');
+    let View = this.service.get('view');
+    let view = new View();
+
     // init variable
     let model;
     try {
