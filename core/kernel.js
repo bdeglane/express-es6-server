@@ -16,8 +16,15 @@ export const resources = [
   auth
 ];
 
-// todo add public resources
-export const publicResources = [];
+// // todo add public and private resources
+// export const publicResources = [
+//   auth
+// ];
+// export const privateResources = [
+//   user,
+//   experiment,
+//   example
+// ];
 
 /*
  * Import all available services
