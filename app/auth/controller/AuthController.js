@@ -2,6 +2,7 @@
 
 import Controller from '../../Controller';
 import UserDao from '../../user/dao/UserDao';
+import {getToken} from '../middleware/auth';
 
 export default class AuthController extends Controller {
   constructor() {
@@ -31,22 +32,29 @@ export default class AuthController extends Controller {
         model = await this.dao.getUserByLogin(login);
       } catch (e) {
         // if error
-        view.writeError(e)
+        view
+          .writeError(e)
           .setStatus(this.code.BAD_REQUEST);
         throw view.response;
       }
       // if is the correct password
       if (password === model.password) {
+        // create a token
+        let token = getToken(model);
         // return a token
-        view.write(model).setStatus(this.code.SUCCESS);
+        view
+          .write({token})
+          .setStatus(this.code.SUCCESS);
         return view.response;
       } else {
-        view.writeError('wrong credentials')
+        view
+          .writeError('wrong credentials')
           .setStatus(this.code.UNAUTHORIZED);
         return view.response;
       }
     } else {
-      view.writeError('miss credentials')
+      view
+        .writeError('miss credentials')
         .setStatus(this.code.BAD_REQUEST);
       return view.response;
     }
