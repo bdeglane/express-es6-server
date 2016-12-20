@@ -6,7 +6,7 @@
 import {user} from '../app/user/user';
 import {experiment} from '../app/experiment/experiment';
 import {example} from '../app/example/example';
-import {auth} from '../app/auth/auth';
+import {auth, middleware} from '../app/auth/auth';
 
 // todo transform to private resources and give json web token callback checker
 export const resources = [
@@ -17,14 +17,20 @@ export const resources = [
 ];
 
 // // todo add public and private resources
-// export const publicResources = [
-//   auth
-// ];
-// export const privateResources = [
-//   user,
-//   experiment,
-//   example
-// ];
+export const publicResources = [
+  auth
+];
+export const privateResources = [
+  user,
+  experiment,
+  example
+];
+
+// give to kernel a middleware to protect private route
+// this callback is managed in the auth package
+export const middlewares = {
+  private: middleware.auth
+};
 
 /*
  * Import all available services
