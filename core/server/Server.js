@@ -26,10 +26,10 @@ export default class Server {
 
   setUp() {
     process.env.PORT = this.config[process.env.NODE_ENV].app.port;
+    this.buildMiddlewares();
     this.createRouters();
     this.getRouters();
     this.buildServices();
-    this.buildMiddlewares();
   }
 
   /**
@@ -84,8 +84,8 @@ export default class Server {
   }
 
   buildMiddlewares() {
-    this.app.use(bodyParser.urlencoded({extended: true}));
     this.app.use(bodyParser.json());
+    this.app.use(bodyParser.urlencoded({extended: true}));
     this.app.use(compression());
     this.app.use(cors());
 
