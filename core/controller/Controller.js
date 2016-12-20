@@ -1,6 +1,7 @@
 'use strict';
 
 import BaseController from './BaseController';
+import View from '../view/View';
 
 // store resources controllers to avoid duplicate memory entry
 let controllers = new Map();
@@ -113,17 +114,22 @@ export default class Controller {
       // promise fall back
       // 1. call the correct controller method
       return this.getController()[method](req, res)
-      // 2. send the result
+      // 2. send the result, an instance of View class
         .then((result) => {
-          res.send(result);
+          res
+            .status(result.status)
+            .json(result);
         })
         // 3. send the error
         .catch((error) => {
-          res.status(400).send(error);
+          res.status(400).json(error);
         });
     } else {
       // todo write error class as a service
-      res.send('sad');
+      let view = new View()
+        .writeError('Not Implemented')
+        .setStatus(501);
+      res.status(view.response.status).json(view.response);
       throw `method ${method} doesn't exist`;
     }
   }
