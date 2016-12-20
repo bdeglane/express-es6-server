@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import {config} from "../../config/config";
-import View from '../view/View';
+import {config} from "../../../config/config";
+import View from '../../../core/view/View';
 
 export const authMiddleware = (req, res, next) => {
   // get the user token
