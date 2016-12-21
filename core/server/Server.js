@@ -14,17 +14,24 @@ import Router from '../router/Router';
 import ServiceContainer from '../service/ServiceContainer';
 
 import {config} from '../../config/config';
-import {resources, services} from '../kernel';
+import {publicResources, privateResources, middlewares, services} from '../kernel';
 
 export default class Server {
   constructor() {
     this.app = express();
     this.config = config;
-    this.resources = resources;
-    this.routers = [];
+    this.resources = {
+      public: publicResources,
+      private: privateResources
+    };
+    this.publicRouters = [];
+    this.privateRouters = [];
   }
 
   setUp() {
+    if (typeof process.env.NODE_ENV == 'undefined') {
+      process.env.NODE_ENV = 'production';
+    }
     process.env.PORT = this.config[process.env.NODE_ENV].app.port;
     this.buildMiddlewares();
     this.createRouters();
@@ -37,32 +44,41 @@ export default class Server {
    * a router will be built.
    */
   createRouters() {
-    for (let resource in this.resources) {
-      this.addRouter(this.resources[resource]);
+    for (let resource in this.resources.public) {
+      this.addPublicRouter(this.resources.public[resource]);
+    }
+    for (let resource in this.resources.private) {
+      this.addPrivateRouter(this.resources.private[resource]);
     }
   }
 
-  /**
-   *
-   * @param router
-   */
-  addRouter(router) {
-    // console.log(router);
-    this.routers.push(new Router(router));
+  addPublicRouter(router) {
+    this.publicRouters.push(new Router(router));
   }
 
-  /**
-   *
-   */
+  addPrivateRouter(router) {
+    this.privateRouters.push(new Router(router));
+  }
+
+  getPublicRouters() {
+    for (let router in this.publicRouters) {
+      this.app.use(this.publicRouters[router].getResourceRouter());
+    }
+  }
+
+  getPrivateRouter() {
+    for (let router in this.privateRouters) {
+      let routes = this.privateRouters[router].getResourceRouter();
+      routes.use(middlewares.private);
+      this.app.use('/api/v1',routes);
+    }
+  }
+
   getRouters() {
-    for (let router in this.routers) {
-      this.app.use(this.routers[router].getRessourceRouter());
-    }
+    this.getPublicRouters();
+    this.getPrivateRouter();
   }
 
-  /**
-   *
-   */
   buildServices() {
     this.serviceContainer = ServiceContainer.getInstance();
     for (let service in services) {
