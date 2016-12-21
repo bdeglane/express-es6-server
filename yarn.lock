@@ -724,6 +724,10 @@ body-parser@~1.8.0:
     raw-body "1.3.0"
     type-is "~1.5.1"
 
+bookshelf-json-columns@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/bookshelf-json-columns/-/bookshelf-json-columns-2.0.1.tgz#f6d299067beb91621314b0ed4b09c7efb5990a1d"
+
 bookshelf@^0.10.2:
   version "0.10.2"
   resolved "https://registry.yarnpkg.com/bookshelf/-/bookshelf-0.10.2.tgz#f3fb9adec7535c15699745224df1de479b6bd17f"
@@ -3089,9 +3093,9 @@ pg-types@1.*:
     postgres-date "~1.0.0"
     postgres-interval "~1.0.0"
 
-pg@^6.1.0:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/pg/-/pg-6.1.1.tgz#09709597013dea436f5ca67433a5f24131f18742"
+pg@^6.1.2:
+  version "6.1.2"
+  resolved "https://registry.yarnpkg.com/pg/-/pg-6.1.2.tgz#2c896a7434502e2b938c100fc085b4e974a186db"
   dependencies:
     buffer-writer "1.0.1"
     packet-reader "0.2.0"

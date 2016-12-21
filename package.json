@@ -4,7 +4,8 @@
   "description": "express server ",
   "main": "index.js",
   "scripts": {
-    "test:core": "./node_modules/.bin/mocha --compilers js:babel-core/register --reporter dot ./core/test/index.js"
+    "test:core": "./node_modules/.bin/mocha --compilers js:babel-core/register --reporter dot ./core/test/index.js",
+    "db:migrate": "./node_modules/.bin/knex.cmd migrate"
   },
   "author": {
     "name": "Benoît Deglane",
@@ -24,6 +25,7 @@
     "babel-preset-es2016": "^6.16.0",
     "babel-preset-stage-3": "^6.17.0",
     "bookshelf": "^0.10.2",
+    "bookshelf-json-columns": "^2.0.1",
     "check-types": "^7.0.1",
     "cors": "^2.8.1",
     "express": "^4.14.0",
@@ -35,7 +37,7 @@
     "jsonwebtoken": "^7.2.1",
     "knex": "^0.12.6",
     "morgan": "^1.7.0",
-    "pg": "^6.1.0",
+    "pg": "^6.1.2",
     "typescript": "^2.0.10",
     "webpack": "^1.14.0"
   },
