@@ -32,7 +32,7 @@ gulp.task('run', function () {
 // Disadvantage: Requests are not blocked until bundle is available,
 //               can serve an old app on refresh
 gulp.task('build:dev', ['webpack:build-dev'], function () {
-  gulp.watch(['app/**/*', 'core/**/*'], ['webpack:build-dev']);
+  gulp.watch(['app/**/*', 'core/**/*','config/**/*'], ['webpack:build-dev']);
 });
 
 // Production build
