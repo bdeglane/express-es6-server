@@ -1,4 +1,5 @@
-export const config = {
+// export const config = {
+module.exports = {
   development: {
     app: {
       // port the node instance listening
