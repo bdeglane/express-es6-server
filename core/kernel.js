@@ -8,15 +8,6 @@ import {experiment} from '../app/experiment/experiment';
 import {example} from '../app/example/example';
 import {auth, middleware} from '../app/auth/auth';
 
-// todo transform to private resources and give json web token callback checker
-export const resources = [
-  user,
-  experiment,
-  example,
-  auth
-];
-
-// // todo add public and private resources
 export const publicResources = [
   auth
 ];
