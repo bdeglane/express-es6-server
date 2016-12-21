@@ -13,17 +13,32 @@ import cors from 'cors';
 import Router from '../router/Router';
 import ServiceContainer from '../service/ServiceContainer';
 
-import {config} from '../../config/config';
-import {publicResources, privateResources, middlewares, services} from '../kernel';
-
 export default class Server {
-  constructor() {
+  constructor({
+    config,
+    publicResources,
+    privateResources,
+    middlewares,
+    services,
+    customErrorHandler
+  }) {
     this.app = express();
-    this.config = config;
-    this.resources = {
-      public: publicResources,
-      private: privateResources
-    };
+    if (typeof config == 'object') {
+      this.config = config;
+    } else {
+      throw new Error('config file must be defined in /config/config.js');
+    }
+    if (typeof publicResources == 'object' && typeof privateResources == 'object') {
+      this.resources = {
+        public: publicResources,
+        private: privateResources
+      };
+    } else {
+      throw new Error('array of routes object must be defined.');
+    }
+    this.middlewares = middlewares;
+    this.services = services;
+    this.customErrorHandler = customErrorHandler;
     this.publicRouters = [];
     this.privateRouters = [];
   }
@@ -36,6 +51,7 @@ export default class Server {
     this.buildMiddlewares();
     this.createRouters();
     this.getRouters();
+    this.setCustomErrorHandler();
     this.buildServices();
   }
 
@@ -69,8 +85,8 @@ export default class Server {
   getPrivateRouter() {
     for (let router in this.privateRouters) {
       let routes = this.privateRouters[router].getResourceRouter();
-      routes.use(middlewares.private);
-      this.app.use('/api/v1',routes);
+      routes.use(this.middlewares.private);
+      this.app.use('/api/v1', routes);
     }
   }
 
@@ -81,8 +97,8 @@ export default class Server {
 
   buildServices() {
     this.serviceContainer = ServiceContainer.getInstance();
-    for (let service in services) {
-      this.serviceContainer.add(service, services[service]);
+    for (let service in this.services) {
+      this.serviceContainer.add(service, this.services[service]);
     }
   }
 
@@ -97,6 +113,15 @@ export default class Server {
       verbose: false
     });
     this.app.use(morgan('[:date[clf]] [:req[x-forwarded-for]] [:req[x-forwarded-server]] :remote-user ":method :url"  :status :response-time ms :res[content-length] ":user-agent"', {stream: accessLogStream}));
+  }
+
+  setCustomErrorHandler() {
+    if (typeof this.customErrorHandler.notFound == 'function') {
+      this.app.use(this.customErrorHandler.notFound);
+    }
+    if (typeof this.customErrorHandler.internalServerError == 'function') {
+      this.app.use(this.customErrorHandler.internalServerError)
+    }
   }
 
   buildMiddlewares() {
