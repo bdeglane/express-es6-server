@@ -3,6 +3,7 @@ const assert = chai.assert;
 
 import Controller from '../../controller/Controller';
 import BaseController from '../../controller/BaseController';
+import View from '../../view/View';
 
 describe('Controller class', () => {
 
@@ -13,7 +14,11 @@ describe('Controller class', () => {
     }
 
     stubMethod(req, res) {
-      return {stub, req, res};
+      return new Promise((resolve, reject) => {
+        let view = new View();
+        view.setStatus(200).write(stub);
+        resolve(view.response);
+      });
     }
   }
   describe('valid class', () => {
@@ -34,13 +39,21 @@ describe('Controller class', () => {
         });
         it('should call stubMethod', () => {
           let req = {test: 'test'};
-          let res = {test: 'test'};
+          let res = {
+            test: 'test',
+            status: (status) => {
+              this.status = status;
+            },
+            json: (stub) => {
+              return stub;
+            }
+          };
           let next = () => {
             return {test: 'test'};
           };
           let method = 'stubMethod';
-          assert.deepEqual(controller.call({req, res, next, method}), {stub, req, res});
-          assert.deepEqual(controller.method({req, res, next, method}), {stub, req, res});
+          assert.deepEqual(controller.call({req, res, next, method}), {stub});
+          assert.deepEqual(controller.method({req, res, next, method}), {stub});
         });
       });
     });
