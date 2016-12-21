@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import {config} from '../../../config/config';
 import View from '../../../core/view/View';
+import {UNAUTHORIZED} from '../../Controller';
 
 export const authMiddleware = (req, res, next) => {
   // get the user token
@@ -14,7 +15,7 @@ export const authMiddleware = (req, res, next) => {
         // create the error response
         let view = new View()
           .writeError('Failed to authenticate token.')
-          .setStatus(401);
+          .setStatus(UNAUTHORIZED);
         // return an error
         return res.status(view.response.status).json(view.response);
       } else {
@@ -29,7 +30,7 @@ export const authMiddleware = (req, res, next) => {
     // create the error response
     let view = new View()
       .writeError('No token.')
-      .setStatus(401);
+      .setStatus(UNAUTHORIZED);
     return res.status(view.response.status).json(view.response);
   }
 };
