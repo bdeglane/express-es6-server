@@ -89,7 +89,7 @@ export default class Router {
    *
    * @returns {Object}
    */
-  getRessourceRouter() {
+  getResourceRouter() {
     return Route.getRouter();
   }
 }
