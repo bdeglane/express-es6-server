@@ -1,5 +1,9 @@
 'use strict';
 import logger from 'winston';
+import {userSchema} from '../model/UserModel';
+import {roleSchema} from '../model/RoleModel';
+import {sessionSchema} from '../model/SessionModel';
+import {permissionSchema} from '../model/PermissionModel';
 
 export const createSchema = (knex, callback) => {
   callback = callback || function () {
@@ -11,39 +15,10 @@ export const createSchema = (knex, callback) => {
     .dropTableIfExists('session')
     .dropTableIfExists('permission')
     // then recreate it
-    .then(() => {
-      return knex.schema
-        .createTable('user', (table) => {
-          table.increments();
-          table.string('name');
-          table.string('login', 128);
-          table.string('password');
-          table.timestamps();
-        });
-    })
-    .then(() => {
-      return knex.schema
-        .createTable('role', (table) => {
-          table.increments();
-          table.string('name');
-        });
-    })
-    .then(() => {
-      return knex.schema
-        .createTable('session', (table) => {
-          table.increments();
-          table.string('name');
-          table.timestamp('created_at').defaultTo(knex.fn.now());
-        });
-    })
-    .then(() => {
-      return knex.schema
-        .createTable('permission', (table) => {
-          table.increments();
-          table.string('name');
-          table.string('permission');
-        });
-    })
+    .then(() => userSchema(knex))
+    .then(() => roleSchema(knex))
+    .then(() => sessionSchema(knex))
+    .then(() => permissionSchema(knex))
     .then(() => {
       logger.info('Database schema have been updated');
       callback();

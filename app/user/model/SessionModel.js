@@ -1,8 +1,16 @@
-import Model from '../../Model';
-import check from 'check-types';
+import {bookshelf} from '../../../config/config-orm';
 
-export default class SessionModel extends Model {
-  constructor() {
-    super();
-  }
-}
+const tableName = 'session';
+
+export const SessionModel = bookshelf.Model.extend({
+  tableName: tableName
+});
+
+export const sessionSchema = (knex) => {
+  return knex.schema
+    .createTable(tableName, (table) => {
+      table.increments();
+      table.string('name');
+      table.timestamp('created_at').defaultTo(knex.fn.now());
+    });
+};
