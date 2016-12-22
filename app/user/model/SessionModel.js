@@ -14,7 +14,6 @@ export const sessionSchema = (knex) => {
   return knex.schema
     .createTable(tableName, (table) => {
       table.increments();
-      table.string('name');
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.integer('user_id').unique().references('user.id');
     });
