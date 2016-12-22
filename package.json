@@ -1,7 +1,7 @@
 {
-  "name": "experiment-api",
+  "name": "flamingo",
   "version": "1.0.0",
-  "description": "express server ",
+  "description": "flamingo, a server for building api",
   "main": "index.js",
   "scripts": {
     "test:core": "./node_modules/.bin/mocha --compilers js:babel-core/register --reporter dot ./core/test/index.js",
