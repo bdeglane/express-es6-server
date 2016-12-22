@@ -15,6 +15,5 @@ export const permissionSchema = (knex) => {
     .createTable(tableName, (table) => {
       table.increments();
       table.string('name');
-      table.string('permission');
     });
 };
