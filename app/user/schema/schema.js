@@ -15,8 +15,8 @@ export const createSchema = (knex, callback) => {
     .dropTableIfExists('session')
     .dropTableIfExists('permission')
     // then recreate it
-    .then(() => userSchema(knex))
     .then(() => roleSchema(knex))
+    .then(() => userSchema(knex))
     .then(() => sessionSchema(knex))
     .then(() => permissionSchema(knex))
     .then(() => {
