@@ -22,6 +22,6 @@ export const userSchema = (knex) => {
       table.string('login', 128);
       table.string('password');
       table.integer('role_id').unique().references('role.id');
-      table.timestamps(null, true);
+      table.timestamps(true, true);
     });
 };
