@@ -13,7 +13,6 @@ import logger from 'winston';
 
 import Router from '../router/Router';
 import ServiceContainer from '../service/ServiceContainer';
-import Database from '../database/Database';
 
 export default class Server {
   constructor({
@@ -43,7 +42,6 @@ export default class Server {
     this.customErrorHandler = customErrorHandler;
     this.publicRouters = [];
     this.privateRouters = [];
-    this.databases = [];
   }
 
   setUp() {
