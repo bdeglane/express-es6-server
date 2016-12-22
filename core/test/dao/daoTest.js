@@ -13,19 +13,6 @@ describe('Dao singleton', () => {
         let dao = Dao.getInstance();
         assert.instanceOf(dao, Dao);
       });
-      describe('attribute', () => {
-        it('should have params', () => {
-          let params = {
-            user: 'test',
-            database: 'test',
-            password: 'test',
-            port: 5432,
-            max: 25,
-            idleTimeoutMillis: 30000
-          };
-          assert.deepEqual(Dao.getParams(), params);
-        });
-      });
       describe('method', () => {
         it('should connect to database', () => {
           let dao = Dao.getInstance();
