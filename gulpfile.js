@@ -3,7 +3,6 @@ var gutil = require('gulp-util');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var webpackConfig = require('./webpack.config.js');
-var scriptWebpackConfig = require('./script.webpack.config');
 var webserver = require('gulp-webserver');
 var mocha = require('gulp-mocha');
 var path = require('path');
