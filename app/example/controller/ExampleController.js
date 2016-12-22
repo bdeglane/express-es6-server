@@ -1,10 +1,8 @@
 import Controller from '../../Controller';
-import ExampleDao from '../dao/ExampleDao';
 
 export default class ExampleController extends Controller {
   constructor() {
     super('example');
-    this.dao = new ExampleDao();
   }
 
   /**

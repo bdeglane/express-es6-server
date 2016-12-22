@@ -1,13 +1,11 @@
 'use strict';
 
 import Controller from '../../Controller';
-import UserDao from '../../user/dao/UserDao';
 import {getToken} from '../middleware/auth';
 
 export default class AuthController extends Controller {
   constructor() {
     super('auth');
-    this.dao = new UserDao();
   }
 
   /**

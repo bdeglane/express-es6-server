@@ -1,12 +1,10 @@
 'use strict';
 
 import Controller from '../../Controller';
-import ExperimentDao from '../dao/ExperimentDao';
 
 export default class ExperimentController extends Controller {
   constructor() {
     super('experiment');
-    this.dao = new ExperimentDao();
   }
 
   async getExperiment(req, res) {
