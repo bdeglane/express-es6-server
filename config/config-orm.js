@@ -2,9 +2,9 @@ let Knex = require('knex');
 let Bookshelf = require('bookshelf');
 let config = require('./config');
 
-if (typeof process.env.NODE_ENV == 'undefined') {
-  process.env.NODE_ENV = 'development';
-}
+// if (typeof process.env.NODE_ENV == 'undefined') {
+//   process.env.NODE_ENV = 'development';
+// }
 
 const dbConnection = {
   host: (
@@ -36,7 +36,7 @@ const dbConnection = {
   debug: (process.env.NODE_ENV == 'development')
 };
 
-const params = {
+export const params = {
   // You need one of the following:
   // npm install pg
   // npm install mysql
@@ -46,11 +46,11 @@ const params = {
   connection: dbConnection
 };
 
-let knex = Knex(params);
-let bookshelf = Bookshelf(knex);
+export const knex = Knex(params);
+export const bookshelf = Bookshelf(knex);
 
-module.exports = {
-  knex: knex,
-  bookshelf: bookshelf,
-  params: params
-};
+// module.exports = {
+//   knex: knex,
+//   bookshelf: bookshelf,
+//   params: params
+// };
