@@ -11,11 +11,11 @@ export const createSchema = (knex, callback) => {
     };
   knex.schema
   // drop table user, role, session, permission if exist
+    .dropTableIfExists('session')
     .dropTableIfExists('user')
     .dropTableIfExists('role_permission')
     .dropTableIfExists('permission')
     .dropTableIfExists('role')
-    .dropTableIfExists('session')
     // then recreate it
     .then(() => roleSchema(knex))
     .then(() => userSchema(knex))
