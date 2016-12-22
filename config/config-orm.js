@@ -1,6 +1,7 @@
 let Knex = require('knex');
 let Bookshelf = require('bookshelf');
-let config = require('./config');
+// let config = require('./config');
+import {config} from './config';
 
 // if (typeof process.env.NODE_ENV == 'undefined') {
 //   process.env.NODE_ENV = 'development';
