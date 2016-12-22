@@ -4,8 +4,10 @@ import {createSchema} from './schema/schema';
 
 export const user = {
   controller: UserController,
-  routing,
-  schema: {
-    createSchema
-  }
+  routing
+};
+
+// export the knex schema for cli
+export const schema = {
+  createSchema
 };

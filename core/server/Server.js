@@ -70,16 +70,10 @@ export default class Server {
 
   addPublicRouter(router) {
     this.publicRouters.push(new Router(router));
-    if (typeof router.schema != 'undefined') {
-      this.buildDatabase(router.schema);
-    }
   }
 
   addPrivateRouter(router) {
     this.privateRouters.push(new Router(router));
-    if (typeof router.schema != 'undefined') {
-      this.buildDatabase(router.schema);
-    }
   }
 
   getPublicRouters() {
@@ -99,10 +93,6 @@ export default class Server {
   getRouters() {
     this.getPublicRouters();
     this.getPrivateRouter();
-  }
-
-  buildDatabase(schema) {
-    // this.databases.push(new Database(schema));
   }
 
   buildServices() {
