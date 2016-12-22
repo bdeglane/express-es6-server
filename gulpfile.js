@@ -39,30 +39,6 @@ gulp.task('build:dev', ['webpack:build-dev'], function () {
 // Production build
 gulp.task('build', ['webpack:build']);
 
-// modify some webpack config options
-var myScriptDevConfig = Object.create(scriptWebpackConfig);
-myScriptDevConfig.devtool = 'sourcemap';
-myScriptDevConfig.debug = true;
-myScriptDevConfig.plugins.push(
-  new webpack.DefinePlugin({
-    'process.env.NODE_ENV': '"development"'
-  }));
-
-// create a single instance of the compiler to allow caching
-var devScriptCompiler = webpack(myScriptDevConfig);
-
-
-gulp.task('build:script:schema', function (callback) {
-  // run webpack
-  devScriptCompiler.run(function (err, stats) {
-    if (err) throw new gutil.PluginError('build:script:schema', err);
-    gutil.log('[build:script:schema]', stats.toString({
-      colors: true
-    }));
-    callback();
-  });
-});
-
 gulp.task('webpack:build', function (callback) {
   // modify some webpack config options
   var productionConfig = Object.create(webpackConfig);
