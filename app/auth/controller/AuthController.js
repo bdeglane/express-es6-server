@@ -46,7 +46,7 @@ export default class AuthController extends Controller {
           let token = getToken(model.attributes);
           // store session start
           try {
-            new SessionModel({user_id: model.attributes.id}).save().then((model) => {
+            await new SessionModel({user_id: model.attributes.id}).save().then((model) => {
             });
           } catch (e) {
             console.log(e);
