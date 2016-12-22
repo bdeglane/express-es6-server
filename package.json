@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test:core": "./node_modules/.bin/mocha --compilers js:babel-core/register --reporter dot ./core/test/index.js",
-    "db:migrate": "./node_modules/.bin/knex.cmd migrate",
-    "db:create-schema": "./node_modules/.bin/knex.cmd migrate",
+    "db:create-schema": "./node_modules/.bin/babel-node core/script/createSchema.js",
     "db:drop-schema": "./node_modules/.bin/knex.cmd migrate"
   },
   "author": {

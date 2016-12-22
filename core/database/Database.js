@@ -4,7 +4,6 @@ import logger from 'winston';
 export default class Database {
   constructor(schemas) {
     this.schemas = schemas;
-    this.recreateSchema();
   }
 
   shouldRecreateSchema() {
