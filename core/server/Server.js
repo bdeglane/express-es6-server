@@ -9,6 +9,7 @@ import morgan from 'morgan';
 import FileStreamRotator from 'file-stream-rotator';
 import compression from 'compression';
 import cors from 'cors';
+import logger from 'winston';
 
 import Router from '../router/Router';
 import ServiceContainer from '../service/ServiceContainer';
@@ -150,7 +151,7 @@ export default class Server {
     return http
       .createServer(this.app)
       .listen(process.env.PORT, () => {
-        console.info(`server started on localhost port: ${process.env.PORT}`);
+        logger.info(`server started on localhost port: ${process.env.PORT}`);
       });
   }
 }
