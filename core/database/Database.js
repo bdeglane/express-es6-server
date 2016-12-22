@@ -13,7 +13,7 @@ export default class Database {
 
   recreateSchema() {
     if (this.shouldRecreateSchema()) {
-      this.schema.recreateSchema(knex, function (err) {
+      this.schema.createSchema(knex, function (err) {
         if (err) {
           logger.error('create database schema error: %s', err.toString());
         }

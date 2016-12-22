@@ -1,7 +1,7 @@
 'use strict';
 import logger from 'winston';
 
-export const recreateSchema = (knex, callback) => {
+export const createSchema = (knex, callback) => {
   callback = callback || function () {
     };
   knex.schema
