@@ -40,8 +40,12 @@ export const authMiddleware = (req, res, next) => {
  * @param user
  */
 export const getToken = (user) => {
+  let model = Object.assign({}, user);
+  delete model.password;
+  delete model.created_at;
+  delete model.updated_at;
   return jwt.sign(
-    user, // the user data
+    model, // the user data
     config[process.env.NODE_ENV].app.token.secret, // a key file
     {
       expiresIn: config[process.env.NODE_ENV].app.token.expire
