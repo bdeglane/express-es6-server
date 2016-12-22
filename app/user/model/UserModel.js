@@ -1,5 +1,6 @@
 import {bookshelf} from '../../../config/config-orm';
 import {RoleModel} from './RoleModel';
+import {SessionModel} from './SessionModel';
 
 const tableName = 'user';
 
@@ -7,6 +8,9 @@ export const UserModel = bookshelf.Model.extend({
   tableName: tableName,
   role: function () {
     return this.belongsTo(RoleModel);
+  },
+  session: function () {
+    return this.hasOne(SessionModel);
   }
 });
 
