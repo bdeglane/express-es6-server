@@ -1,9 +1,13 @@
 import {bookshelf} from '../../../config/config-orm';
+import {RoleModel} from './RoleModel';
 
 const tableName = 'permission';
 
 export const PermissionModel = bookshelf.Model.extend({
-  tableName: tableName
+  tableName: tableName,
+  role: function () {
+    return this.belongsToMany(RoleModel);
+  }
 });
 
 export const permissionSchema = (knex) => {
