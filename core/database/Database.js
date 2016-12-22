@@ -1,24 +1,29 @@
 import {knex} from '../../config/config-orm';
+import logger from 'winston';
 
 export default class Database {
-  constructor(schema) {
-    this.schema = schema;
-
+  constructor(schemas) {
+    this.schemas = schemas;
     this.recreateSchema();
   }
 
   shouldRecreateSchema() {
     return process.env.NODE_ENV == 'development';
+    // return false;
   }
 
   recreateSchema() {
     if (this.shouldRecreateSchema()) {
-      this.schema.createSchema(knex, function (err) {
-        if (err) {
-          logger.error('create database schema error: %s', err.toString());
-        }
-        knex.destroy();
-      });
+      for (let schema in this.schemas) {
+        this.schemas[schema].createSchema(knex, function (err) {
+          if (err) {
+            logger.error('create database schema error: %s', err.toString());
+          }
+          knex.destroy();
+        });
+      }
+    } else {
+      logger.error('can\'t drop schema in ENV production');
     }
   }
 

@@ -3,6 +3,7 @@ var gutil = require('gulp-util');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var webpackConfig = require('./webpack.config.js');
+var scriptWebpackConfig = require('./script.webpack.config');
 var webserver = require('gulp-webserver');
 var mocha = require('gulp-mocha');
 var path = require('path');
@@ -32,11 +33,35 @@ gulp.task('run', function () {
 // Disadvantage: Requests are not blocked until bundle is available,
 //               can serve an old app on refresh
 gulp.task('build:dev', ['webpack:build-dev'], function () {
-  gulp.watch(['app/**/*', 'core/**/*','config/**/*'], ['webpack:build-dev']);
+  gulp.watch(['app/**/*', 'core/**/*', 'config/**/*'], ['webpack:build-dev']);
 });
 
 // Production build
 gulp.task('build', ['webpack:build']);
+
+// modify some webpack config options
+var myScriptDevConfig = Object.create(scriptWebpackConfig);
+myScriptDevConfig.devtool = 'sourcemap';
+myScriptDevConfig.debug = true;
+myScriptDevConfig.plugins.push(
+  new webpack.DefinePlugin({
+    'process.env.NODE_ENV': '"development"'
+  }));
+
+// create a single instance of the compiler to allow caching
+var devScriptCompiler = webpack(myScriptDevConfig);
+
+
+gulp.task('build:script:schema', function (callback) {
+  // run webpack
+  devScriptCompiler.run(function (err, stats) {
+    if (err) throw new gutil.PluginError('build:script:schema', err);
+    gutil.log('[build:script:schema]', stats.toString({
+      colors: true
+    }));
+    callback();
+  });
+});
 
 gulp.task('webpack:build', function (callback) {
   // modify some webpack config options

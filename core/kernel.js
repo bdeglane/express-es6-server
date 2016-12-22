@@ -54,3 +54,9 @@ export const customErrorHandler = {
     res.status(view.response.status).json(view.response);
   }
 };
+
+import {schema} from '../app/user/user';
+
+export const schemas = {
+  user: schema
+};

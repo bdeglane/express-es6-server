@@ -102,7 +102,7 @@ export default class Server {
   }
 
   buildDatabase(schema) {
-    this.databases.push(new Database(schema));
+    // this.databases.push(new Database(schema));
   }
 
   buildServices() {
