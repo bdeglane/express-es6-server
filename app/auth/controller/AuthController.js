@@ -2,10 +2,13 @@
 
 import Controller from '../../Controller';
 import {getToken} from '../middleware/auth';
+import {UserModel} from '../../user/model/UserModel';
+
 
 export default class AuthController extends Controller {
   constructor() {
     super('auth');
+    this.userModel = UserModel;
   }
 
   /**
@@ -23,15 +26,25 @@ export default class AuthController extends Controller {
     // if credentials exist
     if (typeof login != 'undefined' && typeof password != 'undefined') {
       // init var model
-      let model = {
-        id: 1,
-        login: 'test',
-        password: 'test',
-      };
+      let model;
+      try {
+        model = await this.userModel.where('login', login).fetch({withRelated: ['role']})
+        // .then(function (book) {
+        //   console.log(JSON.stringify(book.related('role')));
+        // });
+      } catch (e) {
+        view
+          .writeError('something wrong')
+          .setStatus(this.code.SERVICE_UNAVAILABLE);
+        return view.response;
+      }
+
+      console.log(model);
+
       // if is the correct password
-      if (password === model.password) {
+      if (password === model.attributes.password) {
         // create a token
-        let token = getToken(model);
+        let token = getToken(model.attributes);
         // return a token
         view
           .write({token})
