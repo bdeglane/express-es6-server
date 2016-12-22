@@ -1,11 +1,6 @@
-let Knex = require('knex');
-let Bookshelf = require('bookshelf');
-// let config = require('./config');
+import Knex from 'knex';
+import Bookshelf from 'bookshelf';
 import {config} from './config';
-
-// if (typeof process.env.NODE_ENV == 'undefined') {
-//   process.env.NODE_ENV = 'development';
-// }
 
 const dbConnection = {
   host: (
@@ -49,9 +44,3 @@ export const params = {
 
 export const knex = Knex(params);
 export const bookshelf = Bookshelf(knex);
-
-// module.exports = {
-//   knex: knex,
-//   bookshelf: bookshelf,
-//   params: params
-// };
