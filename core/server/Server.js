@@ -12,6 +12,7 @@ import cors from 'cors';
 
 import Router from '../router/Router';
 import ServiceContainer from '../service/ServiceContainer';
+import Database from '../database/Database';
 
 export default class Server {
   constructor({
@@ -41,12 +42,10 @@ export default class Server {
     this.customErrorHandler = customErrorHandler;
     this.publicRouters = [];
     this.privateRouters = [];
+    this.databases = [];
   }
 
   setUp() {
-    if (typeof process.env.NODE_ENV == 'undefined') {
-      process.env.NODE_ENV = 'production';
-    }
     process.env.PORT = this.config[process.env.NODE_ENV].app.port;
     this.buildMiddlewares();
     this.createRouters();
@@ -70,10 +69,16 @@ export default class Server {
 
   addPublicRouter(router) {
     this.publicRouters.push(new Router(router));
+    if (typeof router.schema != 'undefined') {
+      this.buildDatabase(router.schema);
+    }
   }
 
   addPrivateRouter(router) {
     this.privateRouters.push(new Router(router));
+    if (typeof router.schema != 'undefined') {
+      this.buildDatabase(router.schema);
+    }
   }
 
   getPublicRouters() {
@@ -93,6 +98,10 @@ export default class Server {
   getRouters() {
     this.getPublicRouters();
     this.getPrivateRouter();
+  }
+
+  buildDatabase(schema) {
+    this.databases.push(new Database(schema));
   }
 
   buildServices() {
