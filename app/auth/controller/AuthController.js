@@ -25,18 +25,11 @@ export default class AuthController extends Controller {
     // if credentials exist
     if (typeof login != 'undefined' && typeof password != 'undefined') {
       // init var model
-      let model;
-      //
-      try {
-        // try to get a new model by the dao
-        model = await this.dao.getUserByLogin(login);
-      } catch (e) {
-        // if error
-        view
-          .writeError(e)
-          .setStatus(this.code.BAD_REQUEST);
-        throw view.response;
-      }
+      let model = {
+        id: 1,
+        login: 'test',
+        password: 'test',
+      };
       // if is the correct password
       if (password === model.password) {
         // create a token
