@@ -3,7 +3,7 @@
 import Controller from '../../Controller';
 import {getToken} from '../middleware/auth';
 import {UserModel} from '../../user/model/UserModel';
-
+import {SessionModel} from '../../user/model/SessionModel';
 
 export default class AuthController extends Controller {
   constructor() {
@@ -38,18 +38,30 @@ export default class AuthController extends Controller {
           .setStatus(this.code.SERVICE_UNAVAILABLE);
         return view.response;
       }
-
-      console.log(model);
-
-      // if is the correct password
-      if (password === model.attributes.password) {
-        // create a token
-        let token = getToken(model.attributes);
-        // return a token
-        view
-          .write({token})
-          .setStatus(this.code.SUCCESS);
-        return view.response;
+      // if the login exist
+      if (model != null) {
+        // if is the correct password
+        if (password === model.attributes.password) {
+          // create a token
+          let token = getToken(model.attributes);
+          // store session start
+          try {
+            new SessionModel({user_id: model.attributes.id}).save().then((model) => {
+            });
+          } catch (e) {
+            console.log(e);
+          }
+          // return a token
+          view
+            .write({token})
+            .setStatus(this.code.SUCCESS);
+          return view.response;
+        } else {
+          view
+            .writeError('wrong credentials')
+            .setStatus(this.code.UNAUTHORIZED);
+          return view.response;
+        }
       } else {
         view
           .writeError('wrong credentials')
