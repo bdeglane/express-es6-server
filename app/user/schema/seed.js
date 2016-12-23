@@ -1,14 +1,15 @@
 import {RoleModel} from '../model/RoleModel';
 import {PermissionModel} from '../model/PermissionModel';
 import {UserModel} from '../model/UserModel';
+import logger from 'winston';
 
 Promise
   .all([
     new RoleModel({name: 'ADMIN'}).save().then((model) => {
-      console.log(model);
+      // console.log(model);
     }),
     new PermissionModel({name: 'ALL'}).save().then((model) => {
-      console.log(model);
+      // console.log(model);
     })
   ])
   .then(() => {
@@ -18,10 +19,11 @@ Promise
       password: 'test',
       role_id: 1
     }).save().then((model) => {
-      console.log(model);
+      // console.log(model);
     })
   })
   .then(() => {
+    logger.info('seeded for packages user');
     process.exit(0);
   })
   .catch((e) => {
