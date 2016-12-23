@@ -22,7 +22,7 @@ export default class UserController extends Controller {
     let id = parseInt(req.params.id);
     let model;
     try {
-      model = await UserModel.where('id', id).fetch();
+      model = await UserModel.where('id', id).fetch({withRelated: ['role']});
     } catch (e) {
       // write error in view
       view
