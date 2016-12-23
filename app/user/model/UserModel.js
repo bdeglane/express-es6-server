@@ -19,7 +19,7 @@ export const userSchema = (knex) => {
     .createTable(tableName, (table) => {
       table.increments();
       table.string('name');
-      table.string('login', 128);
+      table.string('login', 128).index();
       table.string('password');
       table.integer('role_id').unique().references('role.id');
       table.timestamps(true, true);
