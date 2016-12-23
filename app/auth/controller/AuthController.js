@@ -27,23 +27,29 @@ export default class AuthController extends Controller {
     if (typeof login != 'undefined' && typeof password != 'undefined') {
       // init var model
       let model;
+      let role;
       try {
-        model = await this.userModel.where('login', login).fetch({withRelated: ['role']})
-        // .then(function (book) {
-        //   console.log(JSON.stringify(book.related('role')));
-        // });
+        model = await UserModel.where('login', login).fetch({withRelated: ['role']});
+        role = model.related('role');
       } catch (e) {
         view
           .writeError('something wrong')
-          .setStatus(this.code.SERVICE_UNAVAILABLE);
+          .setStatus(this.code.INTERNAL_ERROR);
         return view.response;
       }
       // if the login exist
       if (model != null) {
         // if is the correct password
         if (password === model.attributes.password) {
+          // clean user
+          let clean = Object.assign({}, model.attributes);
+          delete clean.password;
+          delete clean.role_id;
+          delete clean.created_at;
+          delete clean.updated_at;
+          clean.role = role.attributes.name;
           // create a token
-          let token = getToken(model.attributes);
+          let token = getToken(clean);
           // store session start
           try {
             await new SessionModel({user_id: model.attributes.id}).save().then((model) => {
