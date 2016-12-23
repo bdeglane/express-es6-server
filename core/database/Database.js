@@ -7,8 +7,18 @@ export default class Database {
   }
 
   shouldRecreateSchema() {
-    return process.env.NODE_ENV == 'development';
-    // return false;
+    if (typeof process.env.NODE_ENV !== 'undefined') {
+      if (process.env.NODE_ENV == 'development') {
+        return true;
+      } else {
+        logger.info(`can't run createSchema outside of NODE_ENV=development, actual env ${process.env.NODE_ENV}`);
+        return false;
+      }
+    } else {
+      logger.warn('NODE_ENV is undefined');
+      process.exit(1);
+      return false;
+    }
   }
 
   recreateSchema() {
@@ -22,7 +32,7 @@ export default class Database {
         });
       }
     } else {
-      logger.error('can\'t drop schema in ENV production');
+      process.exit(0);
     }
   }
 
