@@ -37,13 +37,11 @@ export const authMiddleware = (req, res, next) => {
 
 /**
  *
- * @param user
+ * @param model
  */
-export const getToken = (user) => {
-  let model = Object.assign({}, user);
-  delete model.password;
-  delete model.created_at;
-  delete model.updated_at;
+export const getToken = (model) => {
+  // delete model.role_id;
+  // delete model.role.id;
   return jwt.sign(
     model, // the user data
     config[process.env.NODE_ENV].app.token.secret, // a key file
