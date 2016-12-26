@@ -20,6 +20,36 @@ export default class Controller extends BaseController {
     }
   }
 
+  /**
+   *
+   * @param query
+   * @param view
+   */
+  async getHandler(query, view) {
+    let model;
+    try {
+      model = await query;
+    } catch (e) {
+      // write error in view
+      view
+        .writeError(e)
+        .setStatus(this.code.BAD_REQUEST);
+      // return a error view to the main controller
+      throw view.response;
+    }
+    if (model != null) {
+      view
+        .write(model)
+        .setStatus(this.code.SUCCESS);
+      return view.response;
+    } else {
+      view
+        .write({})
+        .setStatus(this.code.NOT_FOUND);
+      return view.response;
+    }
+  }
+
   // leave blank
 }
 
