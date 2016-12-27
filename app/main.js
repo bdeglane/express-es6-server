@@ -1,4 +1,4 @@
-import Server from './server/Server';
+import Server from '../core/server/Server';
 
 import {config} from '../config/config';
 import {publicResources, privateResources, middlewares, services, customErrorHandler} from './kernel';

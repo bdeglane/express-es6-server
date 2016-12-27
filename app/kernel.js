@@ -3,10 +3,10 @@
  *
  *
  */
-import {user} from '../app/user/user';
-import {experiment} from '../app/experiment/experiment';
-import {example} from '../app/example/example';
-import {auth, middleware} from '../app/auth/auth';
+import {user} from './user/user';
+import {experiment} from './experiment/experiment';
+import {example} from './example/example';
+import {auth, middleware} from './auth/auth';
 
 export const publicResources = [
   auth
@@ -28,12 +28,10 @@ export const middlewares = {
  *
  * Services will be available in the service container.
  */
-import Dao from './dao/Dao';
-import View from './view/View';
+import View from '../core/view/View';
 // import
 
 export const services = {
-  dao: Dao.getInstance(),
   view: View
 };
 
