@@ -11,5 +11,5 @@ let flamingo = new Server({
   services,
   customErrorHandler
 });
-flamingo.setUp();
+flamingo.init();
 flamingo.start();

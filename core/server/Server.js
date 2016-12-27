@@ -44,7 +44,7 @@ export default class Server {
     this.privateRouters = [];
   }
 
-  setUp() {
+  init() {
     process.env.PORT = this.config[process.env.NODE_ENV].app.port;
     this.buildMiddlewares();
     this.createRouters();
