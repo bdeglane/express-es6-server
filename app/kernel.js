@@ -4,7 +4,6 @@
  *
  */
 import {user} from './user/user';
-import {experiment} from './experiment/experiment';
 import {example} from './example/example';
 import {auth, middleware} from './auth/auth';
 
@@ -13,7 +12,6 @@ export const publicResources = [
 ];
 export const privateResources = [
   user,
-  experiment,
   example
 ];
 
