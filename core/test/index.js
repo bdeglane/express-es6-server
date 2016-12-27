@@ -4,8 +4,5 @@ import './router/routeTest';
 // ./core/controller/*
 import './controller/controllerTest';
 import './controller/baseControllerTest';
-// ./core/dao/*
-import './dao/baseDaoTest';
-import './dao/daoTest';
 // ./core/service/*
 import './service/serviceContainerTest';
