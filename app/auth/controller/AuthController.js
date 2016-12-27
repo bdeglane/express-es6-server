@@ -8,7 +8,6 @@ import {SessionModel} from '../../user/model/SessionModel';
 export default class AuthController extends Controller {
   constructor() {
     super('auth');
-    this.userModel = UserModel;
   }
 
   /**
@@ -51,12 +50,7 @@ export default class AuthController extends Controller {
           // create a token
           let token = getToken(clean);
           // store session start
-          try {
-            await new SessionModel({user_id: model.attributes.id}).save().then((model) => {
-            });
-          } catch (e) {
-            console.log(e);
-          }
+          this.storeSession(model);
           // return a token
           view
             .write({token})
@@ -79,6 +73,22 @@ export default class AuthController extends Controller {
         .writeError('miss credentials')
         .setStatus(this.code.BAD_REQUEST);
       return view.response;
+    }
+  }
+
+  /**
+   *
+   * @param model
+   * @returns {Promise.<void>}
+   */
+  async storeSession(model) {
+    // store session start
+    try {
+      await new SessionModel({user_id: model.attributes.id}).save().then((model) => {
+      });
+    } catch (e) {
+      // todo log error
+      console.log(e);
     }
   }
 }
