@@ -24,7 +24,7 @@ export default class Database {
   recreateSchema() {
     if (this.shouldRecreateSchema()) {
       for (let schema in this.schemas) {
-        this.schemas[schema].createSchema(knex, function (err) {
+        this.schemas[schema].schema.createSchema(knex, function (err) {
           if (err) {
             logger.error('create database schema error: %s', err.toString());
           }

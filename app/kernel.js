@@ -51,8 +51,12 @@ export const customErrorHandler = {
   }
 };
 
-import {schema} from '../app/user/user';
-
+import {schema} from './user/user';
+import {seed} from './user/schema/seed'
+// todo find better options
 export const schemas = {
-  user: schema
+  user: {
+    schema,
+    seed
+  }
 };
