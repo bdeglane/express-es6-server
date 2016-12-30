@@ -23,12 +23,4 @@ export default class UserController extends Controller {
 
     return await this.getHandler(UserModel.where('id', id).fetch({withRelated: ['role']}), view);
   }
-
-  /**
-   *
-   * @param req
-   * @param res
-   */
-  getUserRoleById(req, res) {
-  }
 }
