@@ -4,7 +4,7 @@
  *
  */
 import {user} from './user/user';
-import {example} from './example/example';
+import {experiment} from './experiment/experiment';
 import {auth, middleware} from './auth/auth';
 
 export const publicResources = [
@@ -12,7 +12,7 @@ export const publicResources = [
 ];
 export const privateResources = [
   user,
-  example
+  experiment
 ];
 
 // give to kernel a middleware to protect private route
