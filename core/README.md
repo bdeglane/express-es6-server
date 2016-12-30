@@ -14,4 +14,4 @@ core
 ```
 
 ## Principles
-![complete class diagram uml](../../doc/core/complete.png)
+![complete class diagram uml](../doc/core/complete.png)
