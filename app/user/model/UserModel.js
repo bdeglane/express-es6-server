@@ -1,6 +1,7 @@
 import {bookshelf} from '../../../config/config-orm';
 import {RoleModel} from './RoleModel';
 import {SessionModel} from './SessionModel';
+import {ExperimentModel} from '../../experiment/model/ExperimentModel';
 
 const tableName = 'user';
 
@@ -11,6 +12,9 @@ export const UserModel = bookshelf.Model.extend({
   },
   session: function () {
     return this.hasOne(SessionModel);
+  },
+  experiment: function () {
+    return this.hasOne(ExperimentModel);
   }
 });
 
