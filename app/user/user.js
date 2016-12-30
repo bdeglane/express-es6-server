@@ -8,6 +8,6 @@ export const user = {
 };
 
 // export the knex schema for cli
-export const schema = {
+export const userSchema = {
   createSchema
 };

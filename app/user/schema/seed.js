@@ -3,7 +3,7 @@ import {PermissionModel} from '../model/PermissionModel';
 import {UserModel} from '../model/UserModel';
 import logger from 'winston';
 
-export const seed = () => {
+export const userSeed = () => {
   return Promise
     .all([
       new RoleModel({name: 'ADMIN'}).save().then((model) => {
