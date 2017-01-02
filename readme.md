@@ -10,6 +10,7 @@ First, see doc in core/. This server implement classical mvc-web pattern with ex
 
 git clone this repo then run npm install.
 
+
 ### Config file
 In config/config.js file.
 ```javascript
